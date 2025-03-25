@@ -1,30 +1,27 @@
 // const http = require('http'); CommonJS => require
 import http from 'node:http'; //Esmodules => import/export
 
-// Uma requisição HTTP é composta por dois principais recursos: 
+// Stateful - Stateless
 
-// Método HTTP
-// URL
+// Cabeçalhos (requisição/reposta) => Metadados
 
-// Métodos HTTPS: GET, POST, PUT, PATCH, DELETE
-
-// GET = Buscar uma informação do back-end
-// POST = Criar Uma informação no back-end
-// PUT = Atualizar um recurso no back-end
-// PATCH = Atualizar uma informação específica de um recurso no back-end
-// DELETE = Deletar um recurso do back-end
-
-// GET /users = Buscando usuários no back-end
-// POST /users = Criar um usuário no back-end
+const users = []                 
 
 const server = http.createServer((req, res) => {
     const {method, url} = req;
 
     if (method == 'GET' && url == '/users') {
-        return res.end('Listagem de usuários');
+
+        return res
+        .setHeader('Content-type', 'application/json')
+        .end(JSON.stringify(users));
     }
     if (method == "POST" && url == "/users") {
-      return res.end("Criação de usuários");
+      users.push({
+        id: 1,
+        name: 'John Doe',
+        email: 'johndoe@example.com'
+      })
     }
     
 
